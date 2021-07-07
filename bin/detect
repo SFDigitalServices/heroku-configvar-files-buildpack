@@ -1,0 +1,10 @@
+#!/bin/sh
+# bin/detect <BUILD_DIR>
+
+# this buildpack depends on heroku-configvar-files-buildpack-config file in the root of the project
+if [ -f $1/heroku-configvar-files-buildpack-config ]; then
+    echo "heroku-configvar-files-buildpack"
+    exit 0
+else
+    exit 1
+fi

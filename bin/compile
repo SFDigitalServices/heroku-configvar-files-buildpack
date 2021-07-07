@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+# This buildpack will generate shell scripts which run at startup.  The shell scrips will echo
+# environment variables into files.
+# It is implemented in this way so that changes to config vars won't require a rebuild
+# in order for the new values to make it into a file.
+
+BUILD_DIR=${1:-}
+CACHE_DIR=${2:-}
+ENV_DIR=${3:-}
+
+echo "-----> Generating .profile.d dir to hold shell scripts to be run at startup"
+mkdir -p $BUILD_DIR/.profile.d
+
+echo "-----> parsing heroku-configvar-files-buildpack-config"
+while IFS= read -r line; do
+    arrLine=(${line//:/ })
+    VAR_NAME=${arrLine[0]}
+    FILE_NAME=${arrLine[1]}
+
+    echo "       CONFIG VAR NAME: ${VAR_NAME}"
+    echo "       FILE: ${FILE_NAME}"
+    echo "      "
+
+    echo "echo \${${VAR_NAME}} > /app/${FILE_NAME}" > $BUILD_DIR/.profile.d/${FILE_NAME}.sh
+    chmod +x $BUILD_DIR/.profile.d/${FILE_NAME}.sh
+done <$BUILD_DIR/heroku-configvar-files-buildpack-config
