@@ -17,6 +17,6 @@ while IFS= read -r line; do
     echo "       FILE: ${FILE_NAME}"
     echo "      "
 
-    CONFIG_VAR_VAL=$(CAT ${ENV_DIR}/${VAR_NAME})
+    CONFIG_VAR_VAL=$(cat ${ENV_DIR}/${VAR_NAME})
     echo ${CONFIG_VAR_VAL@Q} > $BUILD_DIR/${FILE_NAME}
 done <$BUILD_DIR/heroku-configvar-files-buildpack-config
