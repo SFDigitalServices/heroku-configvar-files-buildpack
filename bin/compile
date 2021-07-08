@@ -16,10 +16,11 @@ while IFS= read -r line; do
     echo "       CONFIG VAR NAME: ${VAR_NAME}"
     echo "       FILE: ${FILE_NAME}"
 
-    CONFIG_VAR_VAL=$(cat ${ENV_DIR}/${VAR_NAME})
-    echo "       VALUE: ${CONFIG_VAR_VAL}"
+    #CONFIG_VAR_VAL=$(cat ${ENV_DIR}/${VAR_NAME})
+    #echo "       VALUE: ${CONFIG_VAR_VAL}"
 
-    echo ${CONFIG_VAR_VAL} > $BUILD_DIR/${FILE_NAME}
+    #echo ${CONFIG_VAR_VAL} > $BUILD_DIR/${FILE_NAME}
+    cp $ENV_DIR/${VAR_NAME} $BUILD_DIR/${FILE_NAME}
     echo "-----> created file at ${BUILD_DIR}/${FILE_NAME}"
     echo "      "
 done <$BUILD_DIR/heroku-configvar-files-buildpack-config
